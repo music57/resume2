@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>履歷 — 產品經理 Product Manager</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:  #1a2744;
+      --teal:  #0e7c7b;
+      --teal-l:#e6f4f4;
+      --gray:  #4a5568;
+      --light: #f7f8fa;
+      --border:#dde3ec;
+      --accent:#e8a020;
+    }
+
+    html, body {
+      width: 210mm;
+      margin: 0 auto;
+      font-family: 'Segoe UI', 'PingFang TC', 'Noto Sans TC', sans-serif;
+      font-size: 11.5px;
+      color: #2d3748;
+      line-height: 1.55;
+      background: #e8ecf1;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: #fff;
+      padding: 0;
+      box-shadow: 0 4px 24px rgba(0,0,0,.12);
+    }
+
+    /* ── HEADER ── */
+    .hd {
+      background: linear-gradient(135deg, var(--navy) 0%, #243b6e 100%);
+      color: #fff;
+      padding: 20px 28px 16px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+    }
+    .hd-name  { font-size: 1.55rem; font-weight: 800; letter-spacing: .02em; line-height: 1.2; }
+    .hd-sub   { font-size: .82rem; color: #a8bfe0; margin-top: 3px; letter-spacing: .05em; }
+    .hd-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+    .pill {
+      background: rgba(255,255,255,.13);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 20px;
+      padding: 2px 9px;
+      font-size: .70rem;
+      color: #d8e8ff;
+    }
+    .hd-right { text-align: right; font-size: .75rem; color: #a8bfe0; line-height: 1.9; }
+
+    /* ── TWO-COL BODY ── */
+    .body {
+      display: grid;
+      grid-template-columns: 172px 1fr;
+    }
+
+    /* ── SIDEBAR ── */
+    .sb {
+      background: #f0f4fb;
+      padding: 14px 14px;
+      border-right: 1px solid var(--border);
+    }
+    .sb-sec { margin-bottom: 13px; }
+    .sb-sec:last-child { margin-bottom: 0; }
+    .sb-title {
+      font-size: .60rem;
+      font-weight: 700;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: var(--teal);
+      border-bottom: 1.5px solid var(--teal);
+      padding-bottom: 2px;
+      margin-bottom: 7px;
+    }
+
+    .edu-school { font-size: .78rem; font-weight: 700; color: var(--navy); }
+    .edu-dept   { font-size: .72rem; color: var(--gray); }
+
+    .lang-row { display: flex; justify-content: space-between; font-size: .75rem; margin-bottom: 3px; }
+    .lang-name { font-weight: 600; color: var(--navy); }
+    .lang-lvl  { color: var(--gray); font-size: .70rem; }
+
+    .cert-item { font-size: .73rem; color: var(--gray); padding: 2px 0 2px 10px; position: relative; }
+    .cert-item::before { content: '✔'; position: absolute; left: 0; color: var(--teal); font-size: .65rem; top: 3px; }
+
+    .tag-grp { margin-bottom: 7px; }
+    .tag-grp-label { font-size: .70rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 3px; }
+    .tag {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-size: .65rem;
+      color: var(--gray);
+    }
+    .tag.t {
+      background: var(--teal-l);
+      border-color: #9dd0d0;
+      color: #0a5c5b;
+    }
+
+    .kv-row { display: flex; justify-content: space-between; font-size: .73rem; margin-bottom: 3px; }
+    .kv-k { color: var(--gray); }
+    .kv-v { font-weight: 600; color: var(--navy); }
+
+    /* ── MAIN ── */
+    .main { padding: 14px 22px; }
+
+    .sec { margin-bottom: 11px; }
+    .sec:last-child { margin-bottom: 0; }
+    .sec-title {
+      font-size: .60rem;
+      font-weight: 700;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: var(--teal);
+      border-bottom: 1.5px solid var(--teal);
+      padding-bottom: 2px;
+      margin-bottom: 8px;
+    }
+
+    /* experience */
+    .exp { margin-bottom: 9px; }
+    .exp:last-child { margin-bottom: 0; }
+    .exp-hd { display: grid; grid-template-columns: 1fr auto; align-items: baseline; }
+    .exp-title { font-size: .86rem; font-weight: 700; color: var(--navy); }
+    .exp-co { font-size: .75rem; color: var(--teal); font-weight: 600; }
+    .exp-period { font-size: .70rem; color: #888; white-space: nowrap; }
+    .exp-meta { font-size: .68rem; color: #999; margin-bottom: 4px; }
+    .exp-meta span { margin-right: 8px; }
+
+    /* project sub-block */
+    .proj {
+      background: var(--light);
+      border-left: 3px solid var(--teal);
+      border-radius: 0 4px 4px 0;
+      padding: 5px 8px;
+      margin-bottom: 5px;
+    }
+    .proj-name { font-size: .75rem; font-weight: 700; color: var(--navy); margin-bottom: 1px; }
+    .proj-desc { font-size: .70rem; color: var(--gray); margin-bottom: 3px; }
+
+    ul.ach { list-style: none; }
+    ul.ach li {
+      font-size: .73rem;
+      color: #374151;
+      padding: 1.5px 0 1.5px 13px;
+      position: relative;
+      line-height: 1.45;
+    }
+    ul.ach li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--teal);
+      font-size: .68rem;
+      top: 2.5px;
+    }
+    ul.ach li strong { color: var(--navy); }
+
+    .ctags { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 5px; }
+    .ctag {
+      background: var(--teal-l);
+      color: #0a5c5b;
+      border-radius: 3px;
+      padding: 1px 6px;
+      font-size: .64rem;
+      border: 1px solid #9dd0d0;
+    }
+
+    /* strengths */
+    .str-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .str-card {
+      background: var(--light);
+      border-radius: 5px;
+      padding: 7px 9px;
+      border-top: 2.5px solid var(--teal);
+    }
+    .str-name { font-size: .75rem; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+    .str-desc { font-size: .68rem; color: var(--gray); line-height: 1.45; }
+
+    /* bio */
+    .bio-text { font-size: .73rem; color: var(--gray); line-height: 1.6; }
+    .bio-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px; }
+    .bio-block { }
+    .bio-role { font-size: .70rem; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+    .bio-item {
+      font-size: .68rem;
+      color: var(--gray);
+      padding-left: 14px;
+      position: relative;
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+    .bio-item::before { position: absolute; left: 0; color: var(--teal); font-weight: 700; }
+    .i1::before { content: '①'; }
+    .i2::before { content: '②'; }
+    .i3::before { content: '③'; }
+
+    /* activities */
+    .act-row { display: grid; grid-template-columns: 68px 1fr; gap: 8px; margin-bottom: 4px; font-size: .72rem; }
+    .act-yr { color: #999; font-size: .67rem; padding-top: 1px; }
+    .act-ct { color: var(--gray); line-height: 1.45; }
+    .act-ct strong { color: var(--navy); }
+
+    /* divider between jobs */
+    .exp-divider { border: none; border-top: 1px dashed var(--border); margin: 7px 0; }
+
+    /* footer */
+    .ft {
+      background: var(--navy);
+      color: #7a90b8;
+      text-align: center;
+      padding: 7px;
+      font-size: .65rem;
+      letter-spacing: .05em;
+    }
+
+    @media print {
+      html, body { background: #fff; width: 210mm; }
+      .page { box-shadow: none; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="hd">
+    <div>
+      <div class="hd-name">產品經理 Product Manager</div>
+      <div class="hd-sub">HealthBuy 利原股份有限公司　｜　5–6 年工作年資　｜　台北市</div>
+      <div class="hd-pills">
+        <span class="pill">Scrum / Agile</span>
+        <span class="pill">UCD 設計思維</span>
+        <span class="pill">英文精通 TOEIC 955</span>
+        <span class="pill">韓文中等 TOPIK 5</span>
+        <span class="pill">20+ 專案管理經驗</span>
+      </div>
+    </div>
+    <div class="hd-right">
+      <span>國立臺北大學</span>
+      <span>應用外語 × 企業管理（雙主修）</span>
+      <span>會議展覽專業人員認證</span>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- SIDEBAR -->
+    <aside class="sb">
+
+      <div class="sb-sec">
+        <div class="sb-title">語言能力</div>
+        <div class="lang-row"><span class="lang-name">英文</span><span class="lang-lvl">精通 · TOEIC 955</span></div>
+        <div class="lang-row"><span class="lang-name">韓文</span><span class="lang-lvl">中等 · TOPIK 5</span></div>
+        <div class="lang-row"><span class="lang-name">中文</span><span class="lang-lvl">母語</span></div>
+      </div>
+
+      <div class="sb-sec">
+        <div class="sb-title">證照</div>
+        <div class="cert-item">會議展覽專業人員認證</div>
+        <div class="cert-item">TOEIC 955 分</div>
+        <div class="cert-item">TOPIK 5 高級韓語檢定</div>
+      </div>
+
+      <div class="sb-sec">
+        <div class="sb-title">產品管理</div>
+        <div class="tags">
+          <span class="tag t">Roadmap</span><span class="tag t">PRD 撰寫</span>
+          <span class="tag t">User Story</span><span class="tag t">Scrum</span>
+          <span class="tag t">PMF 驗證</span><span class="tag t">OKR</span>
+        </div>
+      </div>
+
+      <div class="sb-sec">
+        <div class="sb-title">研究 & 設計</div>
+        <div class="tags">
+          <span class="tag">UCD</span><span class="tag">CJM</span>
+          <span class="tag">用戶訪談</span><span class="tag">競品分析</span>
+          <span class="tag">Site Map</span><span class="tag">Userflow</span>
+          <span class="tag">問卷設計</span>
+        </div>
+      </div>
+
+      <div class="sb-sec">
+        <div class="sb-title">協作工具</div>
+        <div class="tags">
+          <span class="tag">Trello</span><span class="tag">G Suite</span>
+          <span class="tag">Slido</span><span class="tag">XMind</span>
+          <span class="tag">SaaS PMS</span><span class="tag">LINE@</span>
+        </div>
+      </div>
+
+      <div class="sb-sec">
+        <div class="sb-title">管理能力</div>
+        <div class="tags">
+          <span class="tag">團隊領導</span><span class="tag">預算管控</span>
+          <span class="tag">跨部門協作</span><span class="tag">ISO 27001</span>
+          <span class="tag">業務開發</span><span class="tag">SOP 制定</span>
+        </div>
+      </div>
+
+      <div class="sb-sec">
+        <div class="sb-title">社團活動</div>
+        <div class="cert-item">線上英語讀書會 召集人（2018–）</div>
+        <div class="cert-item">AIESEC 國際領袖營 專案領導</div>
+        <div class="cert-item">應用外語系公演 副召集人</div>
+      </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <!-- 工作經驗 -->
+      <section class="sec">
+        <div class="sec-title">工作經驗 Work Experience</div>
+
+        <!-- Job 1 -->
+        <div class="exp">
+          <div class="exp-hd">
+            <div>
+              <span class="exp-title">產品經理 Product Manager　</span>
+              <span class="exp-co">HealthBuy 利原股份有限公司</span>
+            </div>
+            <div class="exp-period">2021/03 — 至今</div>
+          </div>
+          <div class="exp-meta">
+            <span>📍 台北市大同區</span><span>👥 管理 5–8 人</span><span>🏢 軟體 / 網路業</span>
+          </div>
+
+          <div class="proj">
+            <div class="proj-name">HealthBuy — 飲食營養攝取分析系統（APP / WEB）</div>
+            <div class="proj-desc">整合飲食紀錄 APP，協助醫院診所加速數位轉型；協助零售商透過數據優化選品策略。</div>
+            <ul class="ach">
+              <li>執行 <strong>1,000+ 份問卷</strong>、<strong>20+ 場用戶訪談</strong>，規劃產品策略及 Roadmap</li>
+              <li>APP 下載量 5 個月成長 <strong>18%</strong>、活躍用戶成長 <strong>26%</strong>、評分 3.7 → <strong>4.4</strong></li>
+              <li>撰寫 PRD、導入 Scrum，重整 APP / WEB 開發、測試與數據分析流程</li>
+              <li>主導 <strong>10+ 商業合作</strong>（含醫院、診所、零售商）</li>
+            </ul>
+          </div>
+          <div class="proj">
+            <div class="proj-name">好客 — 美業 CRM × POS 網站系統（0 → 1）</div>
+            <div class="proj-desc">串接 LINE@ 預約，推動美業數位轉型，提升店家營運效率。</div>
+            <ul class="ach">
+              <li>完成市場調查、競品分析、<strong>50+ 場用戶訪談</strong>與商業模式設計</li>
+              <li>制定商業策略及產品銷售簡報，完成 PMF 驗證</li>
+            </ul>
+          </div>
+          <div class="ctags">
+            <span class="ctag">#產品目標與願景</span><span class="ctag">#市場與使用者研究</span>
+            <span class="ctag">#產品文件撰寫</span><span class="ctag">#需求優先級管理</span><span class="ctag">#產品策略制定</span>
+          </div>
+        </div>
+
+        <hr class="exp-divider"/>
+
+        <!-- Job 2 -->
+        <div class="exp">
+          <div class="exp-hd">
+            <div>
+              <span class="exp-title">營運經理 / 專案主任　</span>
+              <span class="exp-co">遊戲橘子數位科技（新創 AI 嚴肅遊戲專案）</span>
+            </div>
+            <div class="exp-period">2020/08 — 2020/12</div>
+          </div>
+          <div class="exp-meta">
+            <span>📍 台北市內湖區</span><span>👥 管理 5–8 人</span><span>🏢 500 人以上</span>
+          </div>
+          <ul class="ach">
+            <li>50+ 場實體遊戲與課程，活動 NPS 由 <strong>30.45 → 75.76</strong></li>
+            <li>主導官網改版，停留時間成長 <strong>1.7 倍</strong>，協助開發 6 位潛在客戶</li>
+            <li>3 週內人力由 2 位正職擴充至 8 位長期 PT；制定場次管理系統規格書</li>
+            <li>協同 ISO 27001 資訊安全認證內部作業</li>
+          </ul>
+          <div class="ctags">
+            <span class="ctag">#場地營運規劃</span><span class="ctag">#團隊激勵</span>
+            <span class="ctag">#NPS 提升</span><span class="ctag">#行銷策略</span>
+          </div>
+        </div>
+
+        <hr class="exp-divider"/>
+
+        <!-- Job 3 -->
+        <div class="exp">
+          <div class="exp-hd">
+            <div>
+              <span class="exp-title">PM 專案經理　</span>
+              <span class="exp-co">集思國際會議顧問有限公司</span>
+            </div>
+            <div class="exp-period">2015/07 — 2020/04（4 年 10 個月）</div>
+          </div>
+          <div class="exp-meta">
+            <span>📍 台北市信義區</span><span>👥 管理 4 人以下</span><span>🏢 100–500 人</span>
+          </div>
+          <ul class="ach">
+            <li>管理 / 執行 <strong>20+ 個專案</strong>，含 8 場 1,000+ 人大型活動、接待 200+ 位國際講者</li>
+            <li>2019 年個人專案營收突破 <strong>NT$ 1,200 萬+</strong>，客戶滿意度平均 <strong>9.1 / 10</strong></li>
+            <li>導入 SaaS PMS，加班時數降低 <strong>15%</strong>，6 成以上專案獲利增加 <strong>7%+</strong></li>
+            <li>推動數位轉型（Trello、Slido）；促成 SIT 實習長期合作，培訓 <strong>10+ 位</strong>新進人員</li>
+          </ul>
+          <div class="ctags">
+            <span class="ctag">#專案溝通整合</span><span class="ctag">#成本品質風險管理</span>
+            <span class="ctag">#數位轉型</span><span class="ctag">#品牌行銷</span><span class="ctag">#業務開發</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 核心專長 -->
+      <section class="sec">
+        <div class="sec-title">核心專長 Core Strengths</div>
+        <div class="str-grid">
+          <div class="str-card">
+            <div class="str-name">🗂 專案 / 產品規劃管理</div>
+            <div class="str-desc">確定目標、範疇與資源評估；導入 Scrum 敏捷應變；精確管控成本、品質與進度。</div>
+          </div>
+          <div class="str-card">
+            <div class="str-name">🤝 團隊激勵與管理</div>
+            <div class="str-desc">釐清目標、制定策略，透過溝通打造向心力；依專長分派任務達成共同目標。</div>
+          </div>
+          <div class="str-card">
+            <div class="str-name">📱 網站 / APP 企劃</div>
+            <div class="str-desc">製作 Site Map、Userflow；以 CJM 規劃貼近用戶需求的功能；持續迭代優化。</div>
+          </div>
+          <div class="str-card">
+            <div class="str-name">📊 業務規劃與異業合作</div>
+            <div class="str-desc">規劃創意提案、深度剖析雙方需求，開發長期異業合作、創造雙贏局面。</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 自傳 -->
+      <section class="sec">
+        <div class="sec-title">關於我 About Me</div>
+        <p class="bio-text">「多元可能與影響力」是職涯熱情；「彈性的專案管理」是實踐目標的最佳方案。熱愛學習、擁抱變化；樂於溝通討論；享受思辨整合，挑戰聰明工作、快樂生活的心法。</p>
+        <div class="bio-cols">
+          <div class="bio-block">
+            <div class="bio-role">營運經理 ∣ 新創 VUCA 環境</div>
+            <div class="bio-item i1">凝聚人事異動下的團隊向心力，建立共識目標與工作流程。</div>
+            <div class="bio-item i2">善用 NPS 數據洞察，制定核心體驗優化方案。</div>
+            <div class="bio-item i3">推動跨部門專案，開發線上互動遊戲與管理系統。</div>
+          </div>
+          <div class="bio-block">
+            <div class="bio-role">專案經理 ∣ 高壓整合與數位轉型</div>
+            <div class="bio-item i1">由會議口譯轉任顧問，培養需求敏銳度與彈性應變力。</div>
+            <div class="bio-item i2">涵蓋大型國際會議、文化體驗、深度旅遊多元活動形式。</div>
+            <div class="bio-item i3">引進 SaaS PMS 系統，重制流程、開發客製化模組應用。</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <div class="ft">© 2026 · 產品經理 Product Manager · HealthBuy 利原股份有限公司</div>
+</div>
+</body>
+</html>
